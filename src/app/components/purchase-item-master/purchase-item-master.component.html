@@ -23,7 +23,10 @@
     <hr>
 
     <ul *ngIf="itemLists">
-      <li *ngFor="let row of itemLists;">{{row._id}}</li>
+      <li *ngFor="let row of itemLists;">
+        {{row.itemName}}
+        
+      </li>
     </ul>
 
     <br>
