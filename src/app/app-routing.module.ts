@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'master-color', component: ColorMasterComponent },
   { path: 'master-gst', component: GstTypeMasterComponent },
   { path: 'master-hsn', component: HsnTypeMasterComponent },
-
+  { path: '**', redirectTo: '/master-purchase' }
 ];
 
 @NgModule({
