@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-3" style="background-color: beige;">
+    <small>
+      Purchase Items Master Entry
+    </small>
+    <hr>
+
+    <div class="row">
+      <div class="col">
+        <label>Item Type</label>
+        <input class="form-control form-control-sm" [(ngModel)]="propertyName" />
+        <br>
+        <button class="btn btn-success" (click)="save()">Add</button>
+      </div>
+    </div>
+    <br>
+  </div>
+
+  <div class="col-9" style="background-color: lavender;">
+    <small>
+      Purchase Items Master current lists
+    </small>
+    <hr>
+
+    <ul *ngIf="itemLists">
+      <li *ngFor="let row of itemLists;">{{row._id}}</li>
+    </ul>
+
+    <br>
+  </div>
+</div>
