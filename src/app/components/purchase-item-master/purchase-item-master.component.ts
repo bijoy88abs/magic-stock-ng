@@ -21,7 +21,8 @@ export class PurchaseItemMasterComponent implements OnInit {
     if (this.propertyName !== '') {
       this.masterService.saveMasterPurchaseItem(this.propertyName).subscribe(
         (responseData) => {
-
+          this.propertyName = '';
+          this.viewList();
         },
         (error) => {
 
