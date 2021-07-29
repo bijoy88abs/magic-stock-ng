@@ -10,24 +10,36 @@
         <label>Item Type</label>
         <input class="form-control form-control-sm" [(ngModel)]="propertyName" />
         <br>
-        <button class="btn btn-success" (click)="save()">Add</button>
+        <button class="btn btn-success" *ngIf="!isEdit" (click)="save()">Add</button>
+        <button class="btn btn-success btn-sm" *ngIf="isEdit" (click)="editProperty()">Save Edited Data</button><br><br>
+        <button class="btn btn-secondary btn-sm" *ngIf="isEdit" (click)="cancelEdit()">Cancel</button><br>
       </div>
     </div>
     <br>
   </div>
 
-  <div class="col-9" style="background-color: lavender;">
+  <div class="col-9">
     <small>
       Purchase Items Master current lists
     </small>
     <hr>
-
-    <ul *ngIf="itemLists">
-      <li *ngFor="let row of itemLists;">
-        {{row.itemName}}
-        
-      </li>
-    </ul>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of itemLists;">
+          <td>{{row.itemName}}</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" (click)="editForm(row)">Edit</button> &nbsp;
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteProperty(row._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <br>
   </div>

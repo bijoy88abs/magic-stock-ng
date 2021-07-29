@@ -9,7 +9,8 @@ import { MasterCrudService } from 'src/app/service/master-crud.service';
 export class PurchaseItemMasterComponent implements OnInit {
   propertyName: string;
   itemLists = null;
-
+  storeId: any;
+  isEdit = false;
 
   constructor(private masterService: MasterCrudService) { }
 
@@ -42,8 +43,54 @@ export class PurchaseItemMasterComponent implements OnInit {
     );
   }
 
-  deleteProperty(id) {
-
+  editForm(data) {
+    this.propertyName = data.itemName;
+    this.storeId = data._id;
+    this.isEdit = true;
   }
 
+
+  editProperty() {
+    if (this.storeId && this.propertyName) {
+      const payloadData = {
+        itemName: this.propertyName,
+        id: this.storeId
+      };
+
+      this.masterService.editMasterPurchaseItem(payloadData).subscribe(
+        (responseData) => {
+          this.propertyName = '';
+          this.cancelEdit();
+          this.viewList();
+        },
+        (error) => {
+
+        }
+      );
+    }
+  }
+
+  deleteProperty(id) {
+    if (id) {
+      const payloadData = {
+        id: id
+      };
+
+      this.masterService.deleteMasterPurchaseItem(payloadData).subscribe(
+        (responseData) => {
+          this.propertyName = '';
+          this.viewList();
+        },
+        (error) => {
+
+        }
+      );
+    }
+  }
+
+  cancelEdit() {
+    this.isEdit = false;
+    this.propertyName = '';
+    this.storeId = '';
+  }
 }
