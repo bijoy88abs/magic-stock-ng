@@ -60,7 +60,7 @@ export class MasterCrudService {
     return this.http.post(this.configUrl + 'masterPurchaseMachineItemDelete', payloadData);
   }
 
-  
+
   /************** */
   saveMasterSize(data) {
     return this.http.post(this.configUrl + 'masterSizePost', { sizeName: data });
@@ -78,7 +78,7 @@ export class MasterCrudService {
     return this.http.post(this.configUrl + 'masterSizeDelete', payloadData);
   }
 
-  
+
   /************** */
   saveMasterColor(data) {
     return this.http.post(this.configUrl + 'masterColorPost', { colorName: data });
@@ -95,4 +95,47 @@ export class MasterCrudService {
   deleteMasterColor(payloadData) {
     return this.http.post(this.configUrl + 'masterColorDelete', payloadData);
   }
+
+
+  /************** */
+  saveMasterGst(payloadData) {
+    return this.http.post(this.configUrl + 'masterGstPost', payloadData);
+  }
+
+  viewMasterGst() {
+    return this.http.get(this.configUrl + 'masterGstView');
+  }
+
+  editMasterGst(payloadData) {
+    return this.http.post(this.configUrl + 'masterGstEdit', payloadData);
+  }
+
+  deleteMasterGst(payloadData) {
+    return this.http.post(this.configUrl + 'masterGstDelete', payloadData);
+  }
+
+
+  /************** */
+  saveMasterHsn(data) {
+    return this.http.post(this.configUrl + 'masterHsnPost', { colorName: data });
+  }
+
+  viewMasterHsn() {
+    return this.http.get(this.configUrl + 'masterHsnView');
+  }
+
+  editMasterHsn(payloadData) {
+    return this.http.post(this.configUrl + 'masterHsnEdit', payloadData);
+  }
+
+  deleteMasterHsn(payloadData) {
+    return this.http.post(this.configUrl + 'masterHsnDelete', payloadData);
+  }
+
+
+  /************** */
+  loadMasterData() {    
+    return this.http.get(this.configUrl + 'masterCollectionList');
+  }
+
 }

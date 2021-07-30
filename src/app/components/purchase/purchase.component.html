@@ -1,20 +1,71 @@
-<small>
-  Purchase Items Entry/View
-</small>   
-<hr>>
-
 <div class="row">
-  <div class="col-3">
+  <div class="col-3" style="background-color: beige;">
+    <small>
+      Purchase Items Entry
+    </small>
+    <hr>
+
     <div class="row">
       <div class="col">
-        <label>Item Type</label>
-        <select class="form-control form-control-sm">
-        </select>
+        <label>Item Name</label>
+        <input class="form-control form-control-sm" [(ngModel)]="purchaseItemName" />
+        <br>
+        <label>Item Color</label>
+        <input class="form-control form-control-sm" [(ngModel)]="purchaseItemColor" />
+        <br>
+        <label>Item Size</label>
+        <input class="form-control form-control-sm" [(ngModel)]="purchaseItemSize" />
+        <br>
+        <label>Item Material</label>
+        <input class="form-control form-control-sm" [(ngModel)]="purchaseItemMaterial" />
+        <br>
+        <label>Item Quantity</label>
+        <input class="form-control form-control-sm" [(ngModel)]="purchaseItemQty" />
+        <br>
+        <label>Item Price/Unit</label>
+        <input class="form-control form-control-sm" [(ngModel)]="purchaseItemPricePerUnit" />
+        <br>
+        <label>Item GST</label>
+        <input class="form-control form-control-sm" [(ngModel)]="purchaseItemGst" />
+        <br>
+        <label>Item HSN</label>
+        <input class="form-control form-control-sm" [(ngModel)]="purchaseItemHsn" />
+        <br>
+        <label>Note</label>
+        <input class="form-control form-control-sm" [(ngModel)]="purchaseItemNote" />
+        <br>
+
+        <button class="btn btn-success" *ngIf="!isEdit" (click)="save()">Add</button>
+        <button class="btn btn-success btn-sm" *ngIf="isEdit" (click)="editProperty()">Save Edited Data</button><br><br>
+        <button class="btn btn-secondary btn-sm" *ngIf="isEdit" (click)="cancelEdit()">Cancel</button><br>
       </div>
     </div>
+    <br>
   </div>
 
-  <div class="col-3">
+  <div class="col-9">
+    <small>
+      Purchase Items list view
+    </small>
+    <hr>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="itemLists">
+        <tr *ngFor="let row of itemLists;">
+          <td>{{row.purchaseItemName}}</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" (click)="editForm(row)">Edit</button> &nbsp;
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteProperty(row._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
+    <br>
   </div>
 </div>
