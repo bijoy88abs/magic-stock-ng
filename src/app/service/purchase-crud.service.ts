@@ -9,8 +9,8 @@ export class PurchaseCrudService {
   configUrl = 'https://magic-stock.herokuapp.com/purchase-stock/';
   constructor(private http: HttpClient) { }
 
-  savePurchase(data) {
-    return this.http.post(this.configUrl + 'purchaseItemPost', { itemName: data });
+  savePurchase(payloadData) {
+    return this.http.post(this.configUrl + 'purchaseItemPost', payloadData);
   }
 
   viewPurchase() {
