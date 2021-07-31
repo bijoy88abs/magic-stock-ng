@@ -1,17 +1,14 @@
 <div class="row">
   <div class="col-3" style="background-color: beige;">
     <small>
-      Item's GST Master Entry
+      Item's Material Master Entry
     </small>
     <hr>
 
     <div class="row">
       <div class="col">
-        <label>GST Type</label>
-        <input class="form-control form-control-sm" [(ngModel)]="propertyType" />
-        <br>
-        <label>GST Value %</label>
-        <input type="number" class="form-control form-control-sm" [(ngModel)]="propertyValue" />
+        <label>Material type</label>
+        <input class="form-control form-control-sm" [(ngModel)]="propertyName" />
         <br>
         <button class="btn btn-success" *ngIf="!isEdit" (click)="save()">Add</button>
         <button class="btn btn-success btn-sm" *ngIf="isEdit" (click)="editProperty()">Save Edited Data</button><br><br>
@@ -23,21 +20,19 @@
 
   <div class="col-9">
     <small>
-      Item's GST Master current lists
+      Item's Material Master current lists
     </small>
     <hr>
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th scope="col">GST Type</th>
-          <th scope="col">GST Value(%)</th>
+          <th scope="col">Material</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let row of itemLists;">
-          <td>{{row.gstType}}</td>
-          <td>{{row.gstValue}} %</td>
+          <td>{{row.materialName}}</td>
           <td>
             <button type="button" class="btn btn-primary btn-sm" (click)="editForm(row)">Edit</button> &nbsp;
             <button type="button" class="btn btn-danger btn-sm" (click)="deleteProperty(row._id)">Delete</button>

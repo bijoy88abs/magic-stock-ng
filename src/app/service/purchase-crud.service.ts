@@ -25,4 +25,39 @@ export class PurchaseCrudService {
     return this.http.post(this.configUrl + 'purchaseItemDelete', payloadData);
   }
 
+
+  /********************* */
+  savePurchaseRaw(payloadData) {
+    return this.http.post(this.configUrl + 'purchaseRawPost', payloadData);
+  }
+
+  viewPurchaseRaw() {
+    return this.http.get(this.configUrl + 'purchaseRawView');
+  }
+
+  editPurchaseRaw(payloadData) {
+    return this.http.post(this.configUrl + 'purchaseRawEdit', payloadData);
+  }
+
+  deletePurchaseRaw(payloadData) {
+    return this.http.post(this.configUrl + 'purchaseRawDelete', payloadData);
+  }
+
+  /********************* */
+  savePurchaseMachine(payloadData) {
+    return this.http.post(this.configUrl + 'purchaseMachinePost', payloadData);
+  }
+
+  viewPurchaseMachine() {
+    return this.http.get(this.configUrl + 'purchaseMachineView');
+  }
+
+  editPurchaseMachine(payloadData) {
+    return this.http.post(this.configUrl + 'purchaseMachineEdit', payloadData);
+  }
+
+  deletePurchaseMachine(payloadData) {
+    return this.http.post(this.configUrl + 'purchaseMachineDelete', payloadData);
+  }
+
 }

@@ -1,3 +1,132 @@
-<p>
-  purchase-raw-materials works!
-</p>
+<div class="row">
+  <div class="col-12" style="background-color: beige;" *ngIf="masterDataList">
+    <strong> Purchase Raw Materials Entry </strong>
+    <hr>
+
+    <div class="row">
+      <div class="col-2">
+        <label>Raw material Name</label>
+        <select class="form-control form-control-sm" [(ngModel)]="purchaseItemName">
+          <option *ngFor="let row of masterDataList.masterPurchaseRawItemData" [value]="row.itemName">{{row.itemName}}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-2">
+        <label>Purchase Date</label>
+        <input type="date" class="form-control form-control-sm" [(ngModel)]="purchaseItemDate" />
+        <span style="background-color: burlywood;" *ngIf="isEdit && purchaseItemDateEdit">Recorded date:
+          {{purchaseItemDateEdit | date}}</span>
+        <br>
+      </div>
+
+      <div class="col-2">
+        <label>Item Quantity</label>
+        <input type="number" class="form-control form-control-sm" [(ngModel)]="purchaseItemQty" />
+      </div>
+
+      <div class="col-2">
+        <label>Item Price/Unit</label>
+        <input type="number" class="form-control form-control-sm" [(ngModel)]="purchaseItemPricePerUnit" />
+      </div>
+
+      <div class="col-2">
+        <label>Item GST</label>
+        <select class="form-control form-control-sm" [(ngModel)]="purchaseItemGst">
+          <option *ngFor="let row of masterDataList.masterGstData" [value]="row.gstValue">{{row.gstValue}}%
+          </option>
+        </select>
+      </div>
+
+      <div class="col-2">
+        <label>Total Price</label>
+        <h3>{{purchaseItemTotal}}</h3>
+      </div>
+
+      <div class="col-2">
+        <label>Item HSN</label>
+        <input class="form-control form-control-sm" [(ngModel)]="purchaseItemHsn" />
+      </div>
+
+      <div class="col-2">
+        <label>Supplier/Party</label>
+        <select class="form-control form-control-sm" [(ngModel)]="purchaseItemSupplier">
+          <option *ngFor="let row of masterDataList.masterSupplierData" [value]="row.supplierName">{{row.supplierName}}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-2">
+        <label>Note</label>
+        <input class="form-control form-control-sm" [(ngModel)]="purchaseItemNote" />
+      </div>
+
+      <div class="col-4" *ngIf="!isLoading"><br>
+        <button class="btn btn-success btn-style" [disabled]="validityCheck()" *ngIf="!isEdit" (click)="save()">Add Raw
+          Material</button>
+        <button class="btn btn-success btn-sm" *ngIf="isEdit" [disabled]="validityCheck()" (click)="editProperty()">Save
+          Raw Material
+          Edited Data</button><br><br>
+        <button class="btn btn-secondary btn-sm" *ngIf="isEdit" (click)="cancelEdit()">Cancel</button><br>
+      </div>
+
+      <div class="col-2" *ngIf="isLoading"><br>
+        Loading........
+      </div>
+    </div>
+    <br>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <strong> Purchase Raw materials list view </strong>
+    <hr>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Date (Y/M/D)</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price/Unit</th>
+          <th scope="col">GST</th>
+          <th scope="col">HSN</th>
+          <th scope="col">Total Cost</th>
+          <th scope="col">Supplier/Party</th>
+          <th scope="col">Note</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="itemLists">
+        <tr *ngFor="let row of itemLists;">
+          <td>{{row.purchaseItemName}}</td>
+          <td>{{row.purchaseItemDate}}</td>
+          <td>{{row.purchaseItemQty}}</td>
+          <td>{{row.purchaseItemPricePerUnit}}</td>
+          <td>{{row.purchaseItemGst}}%</td>
+          <td>{{row.purchaseItemHsn}}</td>
+          <td>{{totalPriceCalculationView(row.purchaseItemQty, row.purchaseItemPricePerUnit, row.purchaseItemGst)}}</td>
+          <td>{{row.purchaseItemSupplier}}</td>
+          <td>{{row.purchaseItemNote}}</td>
+          <td [ngClass]="{'selected-row': storeId === row._id}">
+            <span *ngIf="storeId !== row._id">
+              <button type="button" class="btn btn-primary btn-sm" *ngIf="!isLoading"
+                (click)="editForm(row)">Edit</button> &nbsp;
+              <button type="button" class="btn btn-danger btn-sm" *ngIf="!isLoading"
+                (click)="deleteProperty(row._id)">Delete</button>
+            </span>
+
+            <span *ngIf="isLoading"><br>
+              Loading........
+            </span>
+            <span *ngIf="storeId === row._id"><br>
+              Edit phase........
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+  </div>
+</div>

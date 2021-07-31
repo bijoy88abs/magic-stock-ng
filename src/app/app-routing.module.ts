@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ColorMasterComponent } from './components/color-master/color-master.component';
 import { GstTypeMasterComponent } from './components/gst-type-master/gst-type-master.component';
 import { HsnTypeMasterComponent } from './components/hsn-type-master/hsn-type-master.component';
+import { MaterialTypeMasterComponent } from './components/material-type-master/material-type-master.component';
 import { PurchaseItemMasterComponent } from './components/purchase-item-master/purchase-item-master.component';
 import { PurchaseMachineMasterComponent } from './components/purchase-machine-master/purchase-machine-master.component';
 import { PurchaseMachineComponent } from './components/purchase-machine/purchase-machine.component';
@@ -13,6 +14,7 @@ import { ReportsPurchaseComponent } from './components/reports-purchase/reports-
 import { ReportsSaleComponent } from './components/reports-sale/reports-sale.component';
 import { SaleComponent } from './components/sale/sale.component';
 import { SizeMasterComponent } from './components/size-master/size-master.component';
+import { SupplierMasterComponent } from './components/supplier-master/supplier-master.component';
 
 
 const routes: Routes = [
@@ -29,8 +31,10 @@ const routes: Routes = [
   { path: 'master-machine', component: PurchaseMachineMasterComponent },
   { path: 'master-size', component: SizeMasterComponent },
   { path: 'master-color', component: ColorMasterComponent },
+  { path: 'master-material', component: MaterialTypeMasterComponent },
   { path: 'master-gst', component: GstTypeMasterComponent },
   { path: 'master-hsn', component: HsnTypeMasterComponent },
+  { path: 'master-supplier', component: SupplierMasterComponent },
   { path: '**', redirectTo: '/master-purchase' }
 ];
 

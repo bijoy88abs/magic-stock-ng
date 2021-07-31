@@ -1,17 +1,20 @@
 <div class="row">
   <div class="col-3" style="background-color: beige;">
     <small>
-      Item's GST Master Entry
+      Supplier Master Entry
     </small>
     <hr>
 
     <div class="row">
       <div class="col">
-        <label>GST Type</label>
-        <input class="form-control form-control-sm" [(ngModel)]="propertyType" />
+        <label>Supplier Name</label>
+        <input class="form-control form-control-sm" [(ngModel)]="supplierName" />
         <br>
-        <label>GST Value %</label>
-        <input type="number" class="form-control form-control-sm" [(ngModel)]="propertyValue" />
+        <label>Supplier Contacts</label>
+        <input class="form-control form-control-sm" [(ngModel)]="supplierContacts" />
+        <br>
+        <label>Supplier Address</label>
+        <input class="form-control form-control-sm" [(ngModel)]="supplierAddress" />
         <br>
         <button class="btn btn-success" *ngIf="!isEdit" (click)="save()">Add</button>
         <button class="btn btn-success btn-sm" *ngIf="isEdit" (click)="editProperty()">Save Edited Data</button><br><br>
@@ -23,21 +26,23 @@
 
   <div class="col-9">
     <small>
-      Item's GST Master current lists
+      Supplier Master current lists
     </small>
     <hr>
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th scope="col">GST Type</th>
-          <th scope="col">GST Value(%)</th>
+          <th scope="col">Supplier Name</th>
+          <th scope="col">Supplier Contacts</th>
+          <th scope="col">Supplier Address</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let row of itemLists;">
-          <td>{{row.gstType}}</td>
-          <td>{{row.gstValue}} %</td>
+          <td>{{row.supplierName}}</td>
+          <td>{{row.supplierContacts}}</td>
+          <td>{{row.supplierAddress}}</td>
           <td>
             <button type="button" class="btn btn-primary btn-sm" (click)="editForm(row)">Edit</button> &nbsp;
             <button type="button" class="btn btn-danger btn-sm" (click)="deleteProperty(row._id)">Delete</button>

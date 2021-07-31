@@ -17,18 +17,26 @@ export class PurchaseComponent implements OnInit {
   purchaseItemGst: string;
   purchaseItemHsn: string;
   purchaseItemNote: string;
+  purchaseItemDate: any;
+  purchaseItemSupplier: String;
+  purchaseItemDateEdit: any;
+  purchaseItemTotal: any;
 
   masterDataList: any;
 
+  isLoading = false;
   itemLists = null;
   storeId: any;
   isEdit = false;
 
-  constructor(private masterService: MasterCrudService, private purchaseService: PurchaseCrudService) { }
+  constructor(private masterService: MasterCrudService, private purchaseService: PurchaseCrudService) {
+    this.purchaseItemDate = new Date().toISOString().substring(0, 10);
+   }
 
   ngOnInit() {
     this.loadMasterData();
     this.viewList();
+    this.purchaseItemDate ="2012/07/23";
   }
 
   loadMasterData() {
@@ -40,76 +48,30 @@ export class PurchaseComponent implements OnInit {
     );
   }
 
-  save() {
-    if (
-      this.purchaseItemName !== '' &&
-      this.purchaseItemColor !== '' &&
-      this.purchaseItemSize !== '' &&
-      this.purchaseItemMaterial !== '' &&
-      this.purchaseItemQty !== '' &&
-      this.purchaseItemPricePerUnit !== '' &&
-      this.purchaseItemGst !== '' &&
-      this.purchaseItemNote !== ''
-    ) {
-      const payloadData = {
-        purchaseItemName: this.purchaseItemName,
-        purchaseItemColor: this.purchaseItemColor,
-        purchaseItemSize: this.purchaseItemSize,
-        purchaseItemMaterial: this.purchaseItemMaterial,
-        purchaseItemQty: this.purchaseItemQty,
-        purchaseItemPricePerUnit: this.purchaseItemPricePerUnit,
-        purchaseItemGst: this.purchaseItemGst,
-        purchaseItemHsn: this.purchaseItemHsn,
-        purchaseItemNote: this.purchaseItemNote
-      };
-      this.purchaseService.savePurchase(payloadData).subscribe(
-        (responseData) => {
-          this.clearForm();
-          this.viewList();
-        },
-        (error) => { }
-      );
+  validityCheck() {
+    this.totalPriceCalculation();
+    return !this.purchaseItemName || !this.purchaseItemDate || !this.purchaseItemColor || !this.purchaseItemSize || !this.purchaseItemMaterial || !this.purchaseItemQty || !this.purchaseItemGst || !this.purchaseItemPricePerUnit || !this.purchaseItemSupplier;
+  }
+
+  totalPriceCalculation() {
+    if(this.purchaseItemQty && this.purchaseItemPricePerUnit) {
+      this.purchaseItemTotal = (parseInt(this.purchaseItemQty) * parseFloat(this.purchaseItemPricePerUnit)).toFixed(2);
     }
   }
 
-  viewList() {
-    this.purchaseService.viewPurchase().subscribe(
-      (responseData: any) => {
-        this.itemLists = responseData.data;
-      },
-      (error) => { }
-    );
+  totalPriceCalculationView(purchaseItemQty, purchaseItemPricePerUnit, purchaseItemGst) {
+    if(purchaseItemQty && purchaseItemPricePerUnit) {
+      return (parseInt(purchaseItemQty) * parseFloat(purchaseItemPricePerUnit)).toFixed(2);
+    }
   }
 
-  editForm(data) {
-    this.purchaseItemName = data.purchaseItemName;
-    this.purchaseItemColor = data.purchaseItemColor;
-    this.purchaseItemSize = data.purchaseItemSize;
-    this.purchaseItemMaterial = data.purchaseItemMaterial;
-    this.purchaseItemQty = data.purchaseItemQty;
-    this.purchaseItemPricePerUnit = data.purchaseItemPricePerUnit;
-    this.purchaseItemGst = data.purchaseItemGst;
-    this.purchaseItemHsn = data.purchaseItemHsn;
-    this.purchaseItemNote = data.purchaseItemNote;
-    this.storeId = data._id;
-    this.isEdit = true;
-  }
-
-
-  editProperty() {
-    if (
-      this.storeId &&
-      this.purchaseItemName !== '' &&
-      this.purchaseItemColor !== '' &&
-      this.purchaseItemSize !== '' &&
-      this.purchaseItemMaterial !== '' &&
-      this.purchaseItemQty !== '' &&
-      this.purchaseItemPricePerUnit !== '' &&
-      this.purchaseItemGst !== '' &&
-      this.purchaseItemNote !== ''
-    ) {
+  save() {
+    if (this.validityCheck()) {
+      return;
+    } else {
       const payloadData = {
         purchaseItemName: this.purchaseItemName,
+        purchaseItemDate: this.purchaseItemDate,
         purchaseItemColor: this.purchaseItemColor,
         purchaseItemSize: this.purchaseItemSize,
         purchaseItemMaterial: this.purchaseItemMaterial,
@@ -118,15 +80,82 @@ export class PurchaseComponent implements OnInit {
         purchaseItemGst: this.purchaseItemGst,
         purchaseItemHsn: this.purchaseItemHsn,
         purchaseItemNote: this.purchaseItemNote,
+        purchaseItemSupplier: this.purchaseItemSupplier
+      };
+
+      this.isLoading = true;
+      this.purchaseService.savePurchase(payloadData).subscribe(
+        (responseData) => {
+          this.clearForm();
+          this.viewList();
+          this.isLoading = false;
+        },
+        (error) => {
+          this.isLoading = false;
+        }
+      );
+    }
+  }
+
+  viewList() {
+    this.isLoading = true;
+    this.purchaseService.viewPurchase().subscribe(
+      (responseData: any) => {
+        this.itemLists = responseData.data;
+        this.isLoading = false;
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
+  }
+
+  editForm(data) {
+    this.purchaseItemName = data.purchaseItemName;
+    this.purchaseItemDate = data.purchaseItemDate;
+    this.purchaseItemColor = data.purchaseItemColor;
+    this.purchaseItemSize = data.purchaseItemSize;
+    this.purchaseItemMaterial = data.purchaseItemMaterial;
+    this.purchaseItemQty = data.purchaseItemQty;
+    this.purchaseItemPricePerUnit = data.purchaseItemPricePerUnit;
+    this.purchaseItemGst = data.purchaseItemGst;
+    this.purchaseItemHsn = data.purchaseItemHsn;
+    this.purchaseItemNote = data.purchaseItemNote;
+    this.purchaseItemSupplier = data.purchaseItemSupplier;
+    this.storeId = data._id;
+    this.isEdit = true;
+    this.purchaseItemDateEdit = this.purchaseItemDate ? new Date(this.purchaseItemDate) : '';
+    this.totalPriceCalculation();
+  }
+
+
+  editProperty() {
+    if (this.storeId && !this.validityCheck() && this.purchaseItemDate) {
+      const payloadData = {
+        purchaseItemName: this.purchaseItemName,
+        purchaseItemDate: this.purchaseItemDate,
+        purchaseItemColor: this.purchaseItemColor,
+        purchaseItemSize: this.purchaseItemSize,
+        purchaseItemMaterial: this.purchaseItemMaterial,
+        purchaseItemQty: this.purchaseItemQty,
+        purchaseItemPricePerUnit: this.purchaseItemPricePerUnit,
+        purchaseItemGst: this.purchaseItemGst,
+        purchaseItemHsn: this.purchaseItemHsn,
+        purchaseItemNote: this.purchaseItemNote,
+        purchaseItemSupplier: this.purchaseItemSupplier,
         id: this.storeId
       };
 
+      this.isLoading = true;
       this.purchaseService.editPurchase(payloadData).subscribe(
         (responseData) => {
           this.cancelEdit();
           this.viewList();
+          this.isLoading = false;
         },
-        (error) => { }
+        (error) => {
+          this.isLoading = false;
+        }
       );
     }
   }
@@ -137,12 +166,16 @@ export class PurchaseComponent implements OnInit {
         id: id
       };
 
+      this.isLoading = true;
       this.purchaseService.deletePurchase(payloadData).subscribe(
         (responseData) => {
           this.viewList();
           this.cancelEdit();
+          this.isLoading = false;
         },
-        (error) => { }
+        (error) => {
+          this.isLoading = false;
+        }
       );
     }
   }
@@ -154,6 +187,7 @@ export class PurchaseComponent implements OnInit {
 
   clearForm() {
     this.purchaseItemName = '';
+    this.purchaseItemDate = '';
     this.purchaseItemColor = '';
     this.purchaseItemSize = '';
     this.purchaseItemMaterial = '';
@@ -162,7 +196,10 @@ export class PurchaseComponent implements OnInit {
     this.purchaseItemGst = '';
     this.purchaseItemHsn = '';
     this.purchaseItemNote = '';
+    this.purchaseItemSupplier = '';
     this.storeId = '';
+    this.purchaseItemDateEdit = '';
+    this.purchaseItemTotal = '';
   }
 
 }

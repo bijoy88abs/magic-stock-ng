@@ -18,6 +18,8 @@ import { GstTypeMasterComponent } from './components/gst-type-master/gst-type-ma
 import { HsnTypeMasterComponent } from './components/hsn-type-master/hsn-type-master.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MaterialTypeMasterComponent } from './components/material-type-master/material-type-master.component';
+import { SupplierMasterComponent } from './components/supplier-master/supplier-master.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { HttpClientModule } from '@angular/common/http';
     SizeMasterComponent,
     ColorMasterComponent,
     GstTypeMasterComponent,
-    HsnTypeMasterComponent
+    HsnTypeMasterComponent,
+    MaterialTypeMasterComponent,
+    SupplierMasterComponent
   ],
   imports: [
     BrowserModule,

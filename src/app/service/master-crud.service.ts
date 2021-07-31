@@ -132,6 +132,41 @@ export class MasterCrudService {
     return this.http.post(this.configUrl + 'masterHsnDelete', payloadData);
   }
 
+  /************** */
+  saveMasterMaterial(data) {
+    return this.http.post(this.configUrl + 'masterMaterialPost', { materialName: data });
+  }
+
+  viewMasterMaterial() {
+    return this.http.get(this.configUrl + 'masterMaterialView');
+  }
+
+  editMasterMaterial(payloadData) {
+    return this.http.post(this.configUrl + 'masterMaterialEdit', payloadData);
+  }
+
+  deleteMasterMaterial(payloadData) {
+    return this.http.post(this.configUrl + 'masterMaterialDelete', payloadData);
+  }
+
+
+  /************** */
+  saveMasterSupplier(payloadData) {
+    return this.http.post(this.configUrl + 'masterSupplierPost', payloadData);
+  }
+
+  viewMasterSupplier() {
+    return this.http.get(this.configUrl + 'masterSupplierView');
+  }
+
+  editMasterSupplier(payloadData) {
+    return this.http.post(this.configUrl + 'masterSupplierEdit', payloadData);
+  }
+
+  deleteMasterSupplier(payloadData) {
+    return this.http.post(this.configUrl + 'masterSupplierDelete', payloadData);
+  }
+
 
   /************** */
   loadMasterData() {    
