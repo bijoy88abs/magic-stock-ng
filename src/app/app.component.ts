@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'stockApp';
+  isValidate = false;
+  passwordValue: any;
+
+  validateLogin() {
+    if (this.passwordValue === 'champlove25/08') {
+      this.isValidate = true;
+    } else {
+      this.isValidate = false;
+    }
+  }
+
 }

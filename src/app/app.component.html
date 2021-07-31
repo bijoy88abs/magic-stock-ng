@@ -1,4 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="container" *ngIf="!isValidate">
+  <br>
+  <input type="password" class="form-control" placeholder="Type security code" [(ngModel)]="passwordValue">
+  <br>
+  <button (click)="validateLogin()" class="btn btn-success">Login</button>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="isValidate">
   <a class="navbar-brand" href="#"> &nbsp;Magic Moment</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,6 +61,6 @@
   </div>
 </nav>
 
-<div style="padding: 10px;">
+<div style="padding: 10px;" *ngIf="isValidate">
   <router-outlet></router-outlet>
 </div>
